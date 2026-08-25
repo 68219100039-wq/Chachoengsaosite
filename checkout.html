@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตะกร้าสินค้า / ชำระเงิน | แปดริ้ว</title>
+  <meta name="description" content="ตรวจสอบรายการสินค้า กรอกที่อยู่จัดส่ง และชำระเงินสำหรับสินค้าท้องถิ่นฉะเชิงเทรา">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html" class="nav-logo">แปดริ้ว<span>ฉะเชิงเทรา</span></a>
+
+      <button class="nav-toggle" aria-label="เปิดเมนู" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+
+        <li class="has-dropdown">
+          <button class="nav-link" aria-expanded="false">วัด <span class="nav-caret">▾</span></button>
+          <ul class="dropdown">
+            <li><a href="wat.html">ดูวัดทั้งหมด</a></li>
+            <li><a href="wat-sothon.html">วัดโสธรวรารามวรวิหาร</a></li>
+            <li><a href="wat-saman.html">วัดสมานรัตนาราม</a></li>
+            <li><a href="wat-phutthaprommayan.html">วัดพุทธพรหมปัญโญ</a></li>
+            <li><a href="wat-jaeng.html">วัดแจ้ง</a></li>
+            <li><a href="wat-bangkrapho.html">วัดบางกระเจ็ด</a></li>
+            <li><a href="wat-mongkolthep.html">วัดมงคลเทพมุนี</a></li>
+          </ul>
+        </li>
+
+        <li class="has-dropdown">
+          <button class="nav-link" aria-expanded="false">ธรรมชาติ <span class="nav-caret">▾</span></button>
+          <ul class="dropdown">
+            <li><a href="nature.html">ดูทั้งหมด</a></li>
+            <li><a href="nature-park.html">สวนสาธารณะ</a></li>
+            <li><a href="nature-river.html">ล่องแม่น้ำบางปะกง</a></li>
+            <li><a href="nature-farm.html">สวนเกษตร/ฟาร์ม</a></li>
+          </ul>
+        </li>
+
+        <li class="has-dropdown">
+          <button class="nav-link" aria-expanded="false">ตลาด <span class="nav-caret">▾</span></button>
+          <ul class="dropdown">
+            <li><a href="market.html">ดูทั้งหมด</a></li>
+            <li><a href="market-banmai.html">ตลาดบ้านใหม่</a></li>
+            <li><a href="market-bangkrajed.html">ตลาดบางกระเจ็ด</a></li>
+            <li><a href="market-bangkhla.html">ตลาดบางคล้า</a></li>
+          </ul>
+        </li>
+
+        <li><a href="products.html">สินค้า</a></li>
+        <li><a href="about.html">เกี่ยวกับ</a></li>
+        <li><a href="contact.html">ติดต่อ</a></li>
+
+        <li>
+          <a href="checkout.html" class="nav-cart" aria-label="ตะกร้าสินค้า">
+            🧺 <span class="cart-count">0</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container" style="padding-top: var(--space-lg); padding-bottom: var(--space-xl);">
+
+    <div class="section-head">
+      <span class="eyebrow">ขั้นตอนสุดท้าย</span>
+      <h1 style="font-size: clamp(1.8rem, 3vw, 2.4rem);">ตะกร้าสินค้า</h1>
+      <p>ตรวจสอบรายการสินค้า กรอกที่อยู่จัดส่ง แล้วโอนเงินตามยอดที่แจ้ง</p>
+    </div>
+
+    <div class="checkout-grid">
+
+      <!-- ============ ฝั่งซ้าย: รายการสินค้าในตะกร้า ============ -->
+      <section class="checkout-panel">
+        <h2>รายการสินค้า</h2>
+
+        <div id="cart-items-wrap">
+          <!-- รายการสินค้าจะถูกสร้างด้วย JS จาก localStorage -->
+        </div>
+
+        <p id="cart-empty-msg" class="cart-empty hidden">
+          ยังไม่มีสินค้าในตะกร้า <br>
+          <a href="products.html">เลือกซื้อสินค้าท้องถิ่น →</a>
+        </p>
+
+        <div class="cart-total-row">
+          <span>ยอดรวมทั้งหมด</span>
+          <span id="cart-total" class="price">฿0</span>
+        </div>
+      </section>
+
+      <!-- ============ ฝั่งขวา: ที่อยู่จัดส่ง + ชำระเงิน ============ -->
+      <div>
+        <section class="checkout-panel">
+          <h2>ที่อยู่จัดส่ง</h2>
+
+          <form id="checkout-form">
+            <div class="form-field">
+              <label for="ship-name">ชื่อ-นามสกุล</label>
+              <input type="text" id="ship-name" required>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="ship-phone">เบอร์โทร</label>
+                <input type="tel" id="ship-phone" required>
+              </div>
+              <div class="form-field">
+                <label for="ship-postal">รหัสไปรษณีย์</label>
+                <input type="text" id="ship-postal" required>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="ship-address">ที่อยู่จัดส่ง</label>
+              <textarea id="ship-address" required placeholder="บ้านเลขที่ ถนน ตำบล อำเภอ จังหวัด"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label for="ship-note">หมายเหตุ (ถ้ามี)</label>
+              <textarea id="ship-note" placeholder="เช่น เวลาที่สะดวกให้จัดส่ง"></textarea>
+            </div>
+          </form>
+        </section>
+
+        <section class="checkout-panel">
+          <h2>ชำระเงิน</h2>
+
+          <div class="payment-box">
+            <div class="img-placeholder qr-placeholder">
+              QR พร้อมเพย์ / เลขบัญชีธนาคาร<br>(รอใส่รูปจริง)
+            </div>
+            <p class="bank-info">
+              โอนเงินตามยอดรวมด้านซ้าย แล้วกดปุ่มด้านล่างเพื่อแจ้งว่าชำระเงินแล้ว<br>
+              <strong>ธนาคาร:</strong> ชื่อธนาคาร — เลขบัญชี xxx-x-xxxxx-x<br>
+              <strong>ชื่อบัญชี:</strong> ชื่อบัญชีตัวอย่าง
+            </p>
+          </div>
+
+          <button id="confirm-payment-btn" class="btn btn-primary btn-block">แจ้งชำระเงินแล้ว</button>
+        </section>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">ฉะเชิงเทรา</div>
+          <p>จังหวัดที่จะพาคุณไปสู่ อดีตและความสง่างามของวัดวาอารามทั้งหลาย</p>
+        </div>
+        <div>
+          <h4>สำรวจ</h4>
+          <ul>
+            <li><a href="wat.html">วัด</a></li>
+            <li><a href="nature.html">ธรรมชาติ</a></li>
+            <li><a href="market.html">ตลาด</a></li>
+            <li><a href="products.html">สินค้า</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>เกี่ยวกับ</h4>
+          <ul>
+            <li><a href="about.html">เกี่ยวกับเรา</a></li>
+            <li><a href="contact.html">ติดต่อเรา</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>ช่องทางติดต่อ</h4>
+          <ul>
+            <li>โทร: 0123-456-7890</li>
+            <li>อีเมล: chattrawan@gmail.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 ฉะเชิงเทรา</span>
+        <span>เว็บไซต์นี้จัดทำเพื่อการศึกษา</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ ป็อปอัพยืนยันการชำระเงิน ============ -->
+  <div id="success-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-icon">✅</div>
+      <h2>ชำระเงินเสร็จสิ้น</h2>
+      <p>ขอบคุณที่อุดหนุนสินค้าท้องถิ่นแปดริ้ว ทีมงานจะตรวจสอบยอดโอนและจัดส่งสินค้าให้เร็วที่สุด</p>
+      <button id="modal-close-btn" class="btn btn-dark">ปิดหน้าต่างนี้</button>
+    </div>
+  </div>
+
+  <script src="cart.js"></script>
+  <script src="script.js"></script>
+  <script>
+    /* ============ ตรรกะเฉพาะหน้า checkout.html ============ */
+
+    function renderCartUI() {
+      const wrap = document.getElementById('cart-items-wrap');
+      const emptyMsg = document.getElementById('cart-empty-msg');
+      const totalEl = document.getElementById('cart-total');
+      const items = CartAPI.getItems();
+
+      wrap.innerHTML = '';
+
+      if (items.length === 0) {
+        emptyMsg.classList.remove('hidden');
+      } else {
+        emptyMsg.classList.add('hidden');
+
+        items.forEach((item) => {
+          const row = document.createElement('div');
+          row.className = 'cart-item';
+          row.innerHTML = `
+            <div class="thumb"><div class="img-placeholder">สินค้า</div></div>
+            <div class="info">
+              <h4>${item.name}</h4>
+              <span class="unit-price">฿${item.price} / ชิ้น</span>
+            </div>
+            <input type="number" class="qty-control" min="1" value="${item.qty}" data-id="${item.id}">
+            <button class="remove-btn" data-id="${item.id}">ลบ</button>
+          `;
+          wrap.appendChild(row);
+        });
+      }
+
+      totalEl.textContent = `฿${CartAPI.getTotal()}`;
+
+      // ปุ่มลบสินค้า
+      wrap.querySelectorAll('.remove-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          CartAPI.removeItem(btn.dataset.id);
+        });
+      });
+
+      // ช่องแก้จำนวน
+      wrap.querySelectorAll('.qty-control').forEach((input) => {
+        input.addEventListener('change', () => {
+          const qty = parseInt(input.value, 10) || 1;
+          CartAPI.updateQty(input.dataset.id, qty);
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderCartUI);
+    document.addEventListener('cart:updated', renderCartUI);
+
+    // ============ ยืนยันการชำระเงิน ============
+    const confirmBtn = document.getElementById('confirm-payment-btn');
+    const checkoutForm = document.getElementById('checkout-form');
+    const modal = document.getElementById('success-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+
+    confirmBtn.addEventListener('click', () => {
+      if (CartAPI.getItems().length === 0) {
+        alert('ยังไม่มีสินค้าในตะกร้า กรุณาเลือกซื้อสินค้าก่อนนะครับ');
+        return;
+      }
+
+      if (!checkoutForm.checkValidity()) {
+        checkoutForm.reportValidity();
+        return;
+      }
+
+      // แสดงป็อปอัพยืนยัน — ไม่ redirect ไม่เปิดโปรแกรมอื่น
+      modal.classList.remove('hidden');
+
+      // เคลียร์ตะกร้าหลังแจ้งชำระเงินแล้ว
+      CartAPI.clearCart();
+      checkoutForm.reset();
+    });
+
+    modalCloseBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1223 @@
+/* ==========================================================================
+   ฉะเชิงเทรา แปดริ้ว — Design System
+   แนวคิด: แม่น้ำบางปะกงและคลองแปดสายที่หล่อเลี้ยงเมือง
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Charmonman:wght@400;700&family=Noto+Serif+Thai:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  /* — สี: ธรรมชาติของแม่น้ำ วัด และตลาดเก่า — */
+  --color-river-deep: #123832;
+  --color-river: #1F5C50;
+  --color-river-light: #3A7D6E;
+  --color-gold: #C99A3D;
+  --color-gold-soft: #E0BE73;
+  --color-brick: #A8462E;
+  --color-brick-soft: #C77455;
+  --color-paper: #F1E9D6;
+  --color-paper-deep: #E6DAB8;
+  --color-ink: #1E2A22;
+  --color-ink-soft: #4A5750;
+  --color-white: #FFFBF3;
+
+  /* — ตัวอักษร — */
+  --font-display: 'Charmonman', cursive;
+  --font-heading: 'Noto Serif Thai', serif;
+  --font-body: 'Noto Sans Thai', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* — ระยะ/เลย์เอาต์ — */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.75rem;
+  --space-lg: 3rem;
+  --space-xl: 5rem;
+  --radius: 6px;
+  --max-width: 1160px;
+  --shadow-soft: 0 8px 24px rgba(18, 56, 50, 0.12);
+}
+
+/* — Reset พื้นฐาน — */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--color-river-deep);
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Header / Navigation
+   ========================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-river-deep);
+  border-bottom: 3px solid var(--color-gold);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  color: var(--color-white);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.nav-logo span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--color-gold-soft);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+}
+
+.nav-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--color-white);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.nav-menu > li {
+  position: relative;
+}
+
+.nav-menu > li > a,
+.nav-menu > li > button.nav-link {
+  color: var(--color-white);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.5rem 0.1rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-menu > li > a::after,
+.nav-menu > li > button.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background: var(--color-gold);
+  transition: width 0.25s ease;
+}
+
+.nav-menu > li > a:hover::after,
+.nav-menu > li > button.nav-link:hover::after,
+.nav-menu > li.open > button.nav-link::after {
+  width: 100%;
+}
+
+.nav-caret {
+  font-size: 0.6rem;
+  transition: transform 0.25s ease;
+}
+
+.nav-menu > li.open .nav-caret {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  min-width: 210px;
+  padding: var(--space-xs);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.nav-menu > li.open .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown a {
+  display: block;
+  padding: 0.55rem 0.75rem;
+  border-radius: 4px;
+  color: var(--color-ink);
+  font-size: 0.92rem;
+}
+
+.dropdown a:hover {
+  background: var(--color-paper);
+  color: var(--color-river-deep);
+}
+
+.nav-cart {
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.cart-count {
+  background: var(--color-brick);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+}
+
+@media (max-width: 900px) {
+  .nav-toggle { display: flex; }
+
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--color-river-deep);
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+    gap: 0;
+    display: none;
+    border-bottom: 3px solid var(--color-gold);
+  }
+
+  .nav-menu.is-open { display: flex; }
+
+  .nav-menu > li { width: 100%; }
+
+  .nav-menu > li > a,
+  .nav-menu > li > button.nav-link {
+    width: 100%;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    justify-content: space-between;
+  }
+
+  .dropdown {
+    position: static;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    box-shadow: none;
+    background: rgba(255,255,255,0.04);
+    display: none;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .nav-menu > li.open .dropdown {
+    display: block;
+    transform: none;
+  }
+
+  .dropdown a { color: var(--color-white); }
+  .dropdown a:hover { background: rgba(255,255,255,0.08); color: var(--color-gold-soft); }
+}
+
+/* ==========================================================================
+   ลายเซ็น: เส้นคลื่นแปดริ้ว (River Divider)
+   แนวคิด: 8 เส้นแทนคลองแปดสายของเมืองแปดริ้ว ใช้คั่นทุกเซคชันหลัก
+   ========================================================================== */
+
+.river-divider {
+  width: 100%;
+  height: 64px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.river-divider svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.river-divider path {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: draw-river 2.2s ease forwards;
+}
+
+@keyframes draw-river {
+  to { stroke-dashoffset: 0; }
+}
+
+.river-divider.flip { transform: scaleY(-1); }
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  background: linear-gradient(180deg, var(--color-river-deep) 0%, var(--color-river) 100%);
+  color: var(--color-white);
+  padding: var(--space-xl) 0 var(--space-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  color: var(--color-gold-soft);
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: var(--space-sm);
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  color: var(--color-white);
+  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: var(--space-sm);
+}
+
+.hero p.lede {
+  font-size: 1.1rem;
+  color: rgba(255,251,243,0.86);
+  max-width: 46ch;
+  margin-bottom: var(--space-md);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.hero-figure {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  background: var(--color-river-light);
+  box-shadow: var(--shadow-soft);
+}
+
+.hero-figure img { width: 100%; height: 100%; object-fit: cover; }
+
+/* — สไลด์โชว์อัตโนมัติในกรอบรูป hero —
+   ใส่รูปจริงได้โดยแทนที่ .img-placeholder ใน .hero-slide แต่ละอันด้วย <img>
+   จำนวนสไลด์ตอนนี้ = 4, ปรับ --slide-count และ delay ถ้าจำนวนรูปเปลี่ยน */
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: hero-fade 16s infinite both;
+}
+
+.hero-slide img { width: 100%; height: 100%; object-fit: cover; }
+
+.hero-slide:nth-child(1) { animation-delay: 0s; }
+.hero-slide:nth-child(2) { animation-delay: 4s; }
+.hero-slide:nth-child(3) { animation-delay: 8s; }
+.hero-slide:nth-child(4) { animation-delay: 12s; }
+
+@keyframes hero-fade {
+  0%, 100% { opacity: 0; }
+  2%       { opacity: 1; }
+  23%      { opacity: 1; }
+  25%      { opacity: 0; }
+}
+
+.hero-figure:hover .hero-slide {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { animation: none !important; opacity: 0; }
+  .hero-slide:first-child { opacity: 1; }
+}
+
+@media (max-width: 860px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-figure { order: -1; aspect-ratio: 16/9; }
+}
+
+/* ==========================================================================
+   ปุ่ม
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--color-gold);
+  color: var(--color-river-deep);
+}
+
+.btn-primary:hover { background: var(--color-gold-soft); transform: translateY(-2px); }
+
+.btn-outline {
+  border: 1.5px solid rgba(255,251,243,0.5);
+  color: var(--color-white);
+}
+
+.btn-outline:hover { border-color: var(--color-white); background: rgba(255,255,255,0.08); }
+
+.btn-dark {
+  background: var(--color-river-deep);
+  color: var(--color-white);
+}
+
+.btn-dark:hover { background: var(--color-river); transform: translateY(-2px); }
+
+.btn-block { width: 100%; justify-content: center; }
+
+.btn[disabled] { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+/* ==========================================================================
+   Sections ทั่วไป
+   ========================================================================== */
+
+section { padding: var(--space-xl) 0; }
+
+.section-head {
+  max-width: 60ch;
+  margin-bottom: var(--space-lg);
+}
+
+.section-head .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brick);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.section-head h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.section-head p {
+  color: var(--color-ink-soft);
+  margin-top: var(--space-xs);
+}
+
+/* — การ์ดหมวดหมู่ (วัด/ธรรมชาติ/ตลาด/สินค้า) — */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+@media (max-width: 900px) {
+  .category-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .category-grid { grid-template-columns: 1fr; }
+}
+
+.category-card {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-card:hover { transform: translateY(-6px); }
+
+.category-card .thumb {
+  aspect-ratio: 4/3;
+  background: var(--color-paper-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.category-card .thumb .num {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: rgba(18,56,50,0.8);
+  color: var(--color-gold-soft);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.category-card .body { padding: var(--space-sm); flex: 1; display: flex; flex-direction: column; }
+
+.category-card h3 { font-size: 1.15rem; margin-bottom: 4px; }
+
+.category-card p {
+  color: var(--color-ink-soft);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.category-card .go {
+  margin-top: var(--space-xs);
+  font-size: 0.85rem;
+  color: var(--color-brick);
+  font-weight: 600;
+}
+
+/* — การ์ดรายการทั่วไป (ใช้กับหน้ารวมวัด/ตลาด/ธรรมชาติ) — */
+
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+@media (max-width: 900px) { .item-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .item-grid { grid-template-columns: 1fr; } }
+
+.item-card {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.item-card .thumb { aspect-ratio: 3/2; background: var(--color-paper-deep); overflow: hidden; }
+.item-card .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.item-card .body { padding: var(--space-sm); }
+.item-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+.item-card p { color: var(--color-ink-soft); font-size: 0.9rem; margin-bottom: var(--space-xs); }
+
+/* — Highlight เด่น (เช่น หลวงพ่อโสธร) — */
+
+.highlight {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.highlight .thumb { aspect-ratio: auto; min-height: 320px; background: var(--color-paper-deep); overflow: hidden; }
+.highlight .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.highlight .content { padding: var(--space-lg); display: flex; flex-direction: column; justify-content: center; }
+.highlight .eyebrow { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-brick); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: var(--space-xs); }
+.highlight h2 { margin-bottom: var(--space-sm); }
+.highlight p { color: var(--color-ink-soft); margin-bottom: var(--space-md); }
+
+@media (max-width: 800px) {
+  .highlight { grid-template-columns: 1fr; }
+  .highlight .thumb { min-height: 220px; }
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer {
+  background: var(--color-river-deep);
+  color: rgba(255,251,243,0.8);
+  padding: var(--space-lg) 0 var(--space-md);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+@media (max-width: 800px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--color-white);
+  margin-bottom: var(--space-xs);
+}
+
+.footer-grid h4 {
+  color: var(--color-gold-soft);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+.footer-grid ul li { margin-bottom: 0.5rem; }
+.footer-grid a:hover { color: var(--color-gold-soft); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: var(--space-md);
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+/* ==========================================================================
+   Utility
+   ========================================================================== */
+
+.text-center { text-align: center; }
+.mt-lg { margin-top: var(--space-lg); }
+.price {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-brick);
+}
+
+/* — ตัวยึดพื้นที่รูปภาพ ใช้ก่อนใส่รูปจริง — */
+.img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-sm);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--color-river-light) 0px,
+    var(--color-river-light) 14px,
+    var(--color-river) 14px,
+    var(--color-river) 28px
+  );
+  color: rgba(255,251,243,0.85);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   หน้ารายละเอียดสถานที่ (วัด/ธรรมชาติ/ตลาด) — ใช้ในหน้า pages/*.html
+   ========================================================================== */
+
+.breadcrumb {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  padding: var(--space-sm) 0 0;
+}
+
+.breadcrumb a { color: var(--color-brick); }
+.breadcrumb a:hover { text-decoration: underline; }
+
+.detail-hero {
+  aspect-ratio: 21/8;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: var(--space-md) 0;
+  box-shadow: var(--shadow-soft);
+}
+
+@media (max-width: 700px) {
+  .detail-hero { aspect-ratio: 4/3; }
+}
+
+.detail-title .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-brick);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.detail-title h1 {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  margin-bottom: var(--space-xs);
+}
+
+.detail-title .lede-dark {
+  color: var(--color-ink-soft);
+  max-width: 60ch;
+  font-size: 1.05rem;
+}
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .detail-layout { grid-template-columns: 1fr; }
+}
+
+.detail-article h2 {
+  font-size: 1.4rem;
+  margin: var(--space-md) 0 var(--space-xs);
+}
+
+.detail-article h2:first-child { margin-top: 0; }
+
+.detail-article p {
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-sm);
+}
+
+.detail-article ul.checklist li {
+  color: var(--color-ink-soft);
+  padding-left: 1.4rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.detail-article ul.checklist li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-river);
+  font-weight: 700;
+}
+
+.info-card {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: var(--space-md);
+  position: sticky;
+  top: 90px;
+}
+
+.info-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-paper-deep);
+}
+
+.info-row {
+  display: flex;
+  gap: 10px;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed var(--color-paper-deep);
+  font-size: 0.9rem;
+}
+
+.info-row:last-child { border-bottom: none; }
+
+.info-row .label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-brick);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  min-width: 84px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.info-row .value { color: var(--color-ink); }
+
+.mini-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+}
+
+.mini-gallery .thumb { aspect-ratio: 4/3; border-radius: 4px; overflow: hidden; }
+
+.related-links {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: var(--space-md);
+}
+
+.related-links a {
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--color-paper-deep);
+  color: var(--color-river-deep);
+  font-weight: 600;
+}
+
+.related-links a:hover { background: var(--color-gold-soft); }
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--color-brick);
+  font-weight: 600;
+  margin-top: var(--space-md);
+}
+
+.back-link:hover { text-decoration: underline; }
+
+/* ==========================================================================
+   หน้ารายละเอียดสินค้า (product-*.html) — กล่องซื้อสินค้า
+   ========================================================================== */
+
+.buy-box {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: var(--space-md);
+  position: sticky;
+  top: 100px;
+}
+
+.buy-box h1 {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.buy-box .buy-price {
+  font-family: var(--font-mono);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--color-brick);
+  margin: var(--space-xs) 0 var(--space-sm);
+}
+
+.buy-box .qty-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.buy-box .qty-row label {
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+  font-weight: 600;
+}
+
+.js-qty-input {
+  width: 72px;
+  padding: 0.55rem 0.6rem;
+  border: 1.5px solid var(--color-paper-deep);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+
+.js-qty-input:focus { border-color: var(--color-gold); outline: none; }
+
+.buy-box .buy-note {
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-paper-deep);
+}
+
+.product-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+@media (max-width: 600px) { .product-gallery { grid-template-columns: repeat(2, 1fr); } }
+
+.product-gallery .thumb {
+  aspect-ratio: 1/1;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.product-gallery .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   checkout.html — ตะกร้าสินค้า / ที่อยู่จัดส่ง / ชำระเงิน
+   ========================================================================== */
+
+.hidden { display: none !important; }
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .checkout-grid { grid-template-columns: 1fr; }
+}
+
+.checkout-panel {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: var(--space-md);
+}
+
+.checkout-panel h2 {
+  font-size: 1.2rem;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-paper-deep);
+}
+
+.checkout-panel + .checkout-panel { margin-top: var(--space-md); }
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 64px 1fr auto auto;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-paper-deep);
+}
+
+.cart-item:last-of-type { border-bottom: none; }
+
+.cart-item .thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--color-paper-deep);
+}
+
+.cart-item .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.cart-item .thumb .img-placeholder { font-size: 0.55rem; padding: 2px; }
+
+.cart-item .info h4 {
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  margin-bottom: 2px;
+}
+
+.cart-item .info .unit-price {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+}
+
+.cart-item .qty-control {
+  width: 60px;
+  padding: 0.4rem 0.5rem;
+  border: 1.5px solid var(--color-paper-deep);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  text-align: center;
+}
+
+.cart-item .remove-btn {
+  color: var(--color-brick);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cart-item .remove-btn:hover { text-decoration: underline; }
+
+.cart-empty {
+  text-align: center;
+  padding: var(--space-lg) 0;
+  color: var(--color-ink-soft);
+}
+
+.cart-empty a { color: var(--color-brick); font-weight: 600; }
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 2px solid var(--color-ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.cart-total-row .price { font-size: 1.4rem; }
+
+.form-field {
+  margin-bottom: var(--space-sm);
+}
+
+.form-field label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-bottom: 4px;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 1.5px solid var(--color-paper-deep);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.form-field textarea { resize: vertical; min-height: 70px; }
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+@media (max-width: 480px) { .form-row-2 { grid-template-columns: 1fr; } }
+
+.payment-box {
+  text-align: center;
+}
+
+.qr-placeholder {
+  aspect-ratio: 1/1;
+  max-width: 220px;
+  margin: 0 auto var(--space-sm);
+  border-radius: var(--radius);
+}
+
+.payment-box .bank-info {
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-md);
+  line-height: 1.6;
+}
+
+.payment-box .bank-info strong { color: var(--color-ink); }
+
+/* — ป็อปอัพยืนยันการชำระเงิน — */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 56, 50, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-md);
+}
+
+.modal-box {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  padding: var(--space-lg);
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  animation: modal-pop 0.25s ease;
+}
+
+@keyframes modal-pop {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-box .modal-icon {
+  font-size: 2.6rem;
+  margin-bottom: var(--space-sm);
+}
+
+.modal-box h2 {
+  margin-bottom: var(--space-xs);
+}
+
+.modal-box p {
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-md);
+}
+
+/* ==========================================================================
+   about.html — การ์ดผู้จัดทำ
+   ========================================================================== */
+
+.author-card {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: var(--space-lg);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .author-card { grid-template-columns: 1fr; text-align: center; }
+  .author-card .author-photo { margin: 0 auto; }
+}
+
+.author-card .author-photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.author-card .author-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.author-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+
+.author-card .author-role {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--color-brick);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+
+.author-card p {
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-sm);
+}
+
+.author-contact {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: var(--space-sm);
+}
+
+@media (max-width: 640px) { .author-contact { justify-content: center; } }
+
+.author-contact a {
+  font-size: 0.88rem;
+  color: var(--color-river-deep);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.author-contact a:hover { color: var(--color-brick); }
